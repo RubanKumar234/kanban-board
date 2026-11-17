@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --ink: #1c2945;
+  --muted: #52617b;
+  --accent: #4f46e5;
+  --line: rgba(255,255,255,.76);
+  --column: rgba(255,255,255,.28);
+  --card: rgba(255,255,255,.58);
+  --panel: rgba(255,255,255,.72);
+  --dialog: #f5f6fd;
+  --field: #fff;
+  --shadow: 0 12px 36px rgba(50,61,120,.09);
+  --canvas: radial-gradient(ellipse at 8% 12%, #d0c8ff 0, transparent 48%), radial-gradient(ellipse at 95% 38%, #bde9ed 0, transparent 48%), radial-gradient(ellipse at 45% 95%, #f6d8ea 0, transparent 50%), #edf0fa;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #eef0ff;
+  --muted: #b3bdd7;
+  --accent: #b7adff;
+  --line: rgba(203,211,255,.16);
+  --column: rgba(20,26,51,.35);
+  --card: rgba(53,62,99,.4);
+  --panel: rgba(24,31,55,.65);
+  --dialog: #1d2541;
+  --field: #111a32;
+  --shadow: 0 12px 36px rgba(0,0,0,.2);
+  --canvas: radial-gradient(ellipse at 8% 12%, #302452 0, transparent 48%), radial-gradient(ellipse at 95% 38%, #143e49 0, transparent 48%), radial-gradient(ellipse at 45% 95%, #352447 0, transparent 50%), #0d1428;
+}
+body { margin: 0; font-family: Arial, sans-serif; color: var(--ink); background: var(--canvas); background-attachment: fixed; }
+.app-shell { background: transparent; }
+.app-header { background: var(--panel); border-color: var(--line); backdrop-filter: blur(20px); }
+.task-column, .task-card, .summary-card, .theme-toggle, .column-count { border: 1px solid var(--line); box-shadow: var(--shadow); }
+.task-column { background: var(--column); backdrop-filter: blur(22px); }
+.task-card { background: var(--card); backdrop-filter: blur(16px); cursor: grab; user-select: none; transition: background .18s, box-shadow .18s; }
+.task-card:hover { box-shadow: 0 12px 30px rgba(73,66,147,.18); }
+.task-card.is-dragging { cursor: grabbing; outline: 2px solid var(--accent); }
+.column-over { background: var(--panel); }
+.summary-card, .theme-toggle, .column-count { background: var(--panel); }
+.theme-toggle { color: var(--ink); cursor: pointer; min-height: 44px; }
+.card-action { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; min-height: 36px; cursor: pointer; }
+.card-action:hover { background: var(--panel); }
+.text-gray-800 { color: var(--ink); }
+.text-gray-400, .text-gray-500, .text-gray-600, .text-slate-600 { color: var(--muted); }
+.text-indigo-600 { color: var(--accent); }
+:root[data-theme="dark"] .text-amber-600 { color: #f9c46b; }
+:root[data-theme="dark"] .text-green-600 { color: #79ddb0; }
+:root[data-theme="dark"] .text-red-600 { color: #ff9ba9; }
+.task-modal { background: var(--dialog); color: var(--ink); border: 1px solid var(--line); }
+.task-modal input, .task-modal textarea, .task-modal select { background: var(--field); color: var(--ink); border-color: var(--muted); }
+.task-modal button:hover:not([type="submit"]) { background: var(--panel); }
+[role="status"].bg-amber-100 { color: #713f12; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+
+/* Shared status tints for summary panels and column headings. */
+[data-status="total"] { --status-rgb: 99, 102, 241; }
+[data-status="todo"] { --status-rgb: 100, 116, 139; }
+[data-status="in-progress"] { --status-rgb: 245, 158, 11; }
+[data-status="done"] { --status-rgb: 16, 185, 129; }
+.summary-card { background: rgba(var(--status-rgb), .14); border-color: rgba(var(--status-rgb), .24); backdrop-filter: blur(20px); }
+.column-heading { background: rgba(var(--status-rgb), .16); border: 1px solid rgba(var(--status-rgb), .18); }
+:root[data-theme="dark"] .summary-card { background: rgba(var(--status-rgb), .16); }
+:root[data-theme="dark"] .column-heading { background: rgba(var(--status-rgb), .22); }
+
+
+.column-add { min-width: 36px; min-height: 36px; cursor: pointer; background: var(--panel); }
+.column-add:hover { box-shadow: 0 0 0 2px var(--accent); }
+.inline-edit-trigger { cursor: text; border-radius: 4px; }
+.inline-edit-trigger:hover { background: var(--panel); }
+.inline-editor { cursor: auto; user-select: text; }
+.inline-editor input, .inline-editor textarea { width: 100%; min-width: 0; border: 1px solid var(--muted); border-radius: 6px; padding: 8px; color: var(--ink); background: var(--field); }
